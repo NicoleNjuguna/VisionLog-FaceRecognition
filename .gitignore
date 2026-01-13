@@ -20,7 +20,6 @@ desktop.ini
 
 # Data and models
 /data/
-/models/
 *.ckpt
 
 # Streamlit
@@ -30,7 +29,6 @@ venv/
 __pycache__/
 *.pyc
 data/
-models/
 .ipynb_checkpoints/
 env/
-/.streamlit/secrets.toml
+.streamlit/secrets.toml

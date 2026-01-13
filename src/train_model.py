@@ -17,7 +17,8 @@ def download_dataset_via_kagglehub(dest="data"):
 
     os.makedirs(dest, exist_ok=True)
     # This API unzips in place when unzip=True
-    kagglehub.dataset_download_files("ziya07/face-based-attendance-dataset", path=dest, unzip=True)
+    # kagglehub vX exposes `dataset_download`; use that to download and unzip
+    kagglehub.dataset_download("ziya07/face-based-attendance-dataset", path=dest, unzip=True)
     return dest
 
 
