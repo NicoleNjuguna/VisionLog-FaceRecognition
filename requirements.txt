@@ -1,0 +1,11 @@
+streamlit
+streamlit-webrtc
+opencv-python-headless
+keras-facenet
+scikit-learn
+pandas
+numpy
+Pillow
+joblib
+tqdm
+kagglehub

@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+
+# Virtual env
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Jupyter
+.ipynb_checkpoints
+
+# OS files
+Thumbs.db
+desktop.ini
+
+# Data and models
+/data/
+/models/
+*.ckpt
+
+# Streamlit
+.streamlit/secrets.toml
+.venv/
+venv/
+__pycache__/
+*.pyc
+data/
+models/
+.ipynb_checkpoints/
+env/
+/.streamlit/secrets.toml
