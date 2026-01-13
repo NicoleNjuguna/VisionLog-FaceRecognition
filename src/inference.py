@@ -30,7 +30,11 @@ def recognize_face(face_img, models):
     # face_img: RGB image of face region
     arr = cv2.resize(face_img, (160, 160))
     arr = arr.astype("float32") / 127.5 - 1.0
-    emb = preprocessing.get_embedding(arr)
+    try:
+        emb = preprocessing.get_embedding(arr)
+    except ModuleNotFoundError as e:
+        # Propagate a clear error so callers can handle absence of TF at runtime
+        raise
     X = emb.reshape(1, -1)
     if models.get("pca") is not None:
         X = models["pca"].transform(X)
@@ -50,7 +54,14 @@ def process_frame(frame_bgr, models, min_confidence=0.6):
         face_rgb = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
         try:
             name, conf = recognize_face(face_rgb, models)
+        except ModuleNotFoundError:
+            # TensorFlow / keras-facenet not installed in this environment.
+            # Draw a red rectangle and text to indicate recognition is unavailable.
+            cv2.rectangle(frame_bgr, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            cv2.putText(frame_bgr, "Model missing", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+            continue
         except Exception:
+            # For any other error during recognition, skip this face.
             continue
 
         label_text = f"{name}: {conf:.2f}"
