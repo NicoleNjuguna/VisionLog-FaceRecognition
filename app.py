@@ -66,8 +66,7 @@ class VideoProcessor(VideoTransformerBase):
 webrtc_streamer(
     key="face-recognition",
     rtc_configuration=RTC_CONFIGURATION,
-    mode="RTC",
-    video_processor_factory=VideoProcessor,
+    video_transformer_factory=VideoProcessor,
     media_stream_constraints={"video": True, "audio": False},
 )
 
