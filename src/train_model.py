@@ -16,9 +16,19 @@ def download_dataset_via_kagglehub(dest="data"):
         raise RuntimeError("kagglehub not available; please install and configure Kaggle credentials") from e
 
     os.makedirs(dest, exist_ok=True)
-    # This API unzips in place when unzip=True
-    # kagglehub vX exposes `dataset_download`; use that to download and unzip
-    kagglehub.dataset_download("ziya07/face-based-attendance-dataset", path=dest, unzip=True)
+    # kagglehub's `dataset_download` may not support unzip in some versions.
+    kagglehub.dataset_download("ziya07/face-based-attendance-dataset", path=dest)
+    # Try to unzip any downloaded zip files into `dest`.
+    import zipfile
+    for fname in os.listdir(dest):
+        if fname.lower().endswith('.zip'):
+            fpath = os.path.join(dest, fname)
+            try:
+                with zipfile.ZipFile(fpath, 'r') as zf:
+                    zf.extractall(dest)
+            except Exception:
+                # ignore unzip errors and continue
+                continue
     return dest
 
 
